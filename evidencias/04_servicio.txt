@@ -1,0 +1,38 @@
+# R3 · Servicio /reiniciar_contador (std_srvs/srv/Trigger) llamado con ros2 service call
+# Generado el 21/10/2026 21:50:37 en jasov@JASOV
+
+$ ros2 service list
+/contador_nodo/describe_parameters
+/contador_nodo/get_parameter_types
+/contador_nodo/get_parameters
+/contador_nodo/get_type_description
+/contador_nodo/list_parameters
+/contador_nodo/set_parameters
+/contador_nodo/set_parameters_atomically
+/mi_nodo/describe_parameters
+/mi_nodo/get_parameter_types
+/mi_nodo/get_parameters
+/mi_nodo/get_type_description
+/mi_nodo/list_parameters
+/mi_nodo/set_parameters
+/mi_nodo/set_parameters_atomically
+/reiniciar_contador
+
+$ ros2 service type /reiniciar_contador
+std_srvs/srv/Trigger
+
+$ ros2 service call /reiniciar_contador std_srvs/srv/Trigger
+waiting for service to become available...
+requester: making request: std_srvs.srv.Trigger_Request()
+
+response:
+std_srvs.srv.Trigger_Response(success=True, message='Contador reiniciado a 0 (valor anterior: 13)')
+
+
+# Log de contador_nodo: la cuenta vuelve a empezar después del reinicio
+$ grep -A 3 reiniciado log_contador_nodo.txt
+[INFO] [1792612238.907072758] [contador_nodo]: Contador reiniciado a 0 (valor anterior: 13)
+[INFO] [1792612239.560718081] [contador_nodo]: Recibido "Hola desde ROS2, numero 13" -> contador = 1
+[INFO] [1792612240.560726174] [contador_nodo]: Recibido "Hola desde ROS2, numero 14" -> contador = 2
+[INFO] [1792612241.560661806] [contador_nodo]: Recibido "Hola desde ROS2, numero 15" -> contador = 3
+

@@ -1,0 +1,54 @@
+# Memoria M3 · Un suscriptor que espera Float32 en /contador (Int32) no recibe nada y no da ningún error
+# Generado el 21/10/2026 21:51:21 en jasov@JASOV
+
+# En paralelo se está ejecutando: ros2 topic echo /contador std_msgs/msg/Float32
+$ ros2 topic list -t
+/contador [std_msgs/msg/Float32, std_msgs/msg/Int32]
+/parameter_events [rcl_interfaces/msg/ParameterEvent]
+/rosout [rcl_interfaces/msg/Log]
+/saludo [std_msgs/msg/String]
+
+$ ros2 topic info /contador --verbose
+Type: ['std_msgs/msg/Float32', 'std_msgs/msg/Int32']
+
+Publisher count: 1
+
+Node name: contador_nodo
+Node namespace: /
+Topic type: std_msgs/msg/Int32
+Topic type hash: RIHS01_b6578ded3c58c626cfe8d1a6fb6e04f706f97e9f03d2727c9ff4e74b1cef0deb
+Endpoint type: PUBLISHER
+GID: 01.0f.1b.3e.7d.03.0b.02.00.00.00.00.00.00.13.03
+QoS profile:
+  Reliability: RELIABLE
+  History (Depth): UNKNOWN
+  Durability: TRANSIENT_LOCAL
+  Lifespan: Infinite
+  Deadline: Infinite
+  Liveliness: AUTOMATIC
+  Liveliness lease duration: Infinite
+
+Subscription count: 1
+
+Node name: _ros2cli_1223
+Node namespace: /
+Topic type: std_msgs/msg/Float32
+Topic type hash: RIHS01_7170d3d8f841f7be3172ce5f4f59f3a4d7f63b0447e8b33327601ad64d83d6e2
+Endpoint type: SUBSCRIPTION
+GID: 01.0f.1b.3e.c7.04.05.ef.00.00.00.00.00.00.07.04
+QoS profile:
+  Reliability: RELIABLE
+  History (Depth): UNKNOWN
+  Durability: TRANSIENT_LOCAL
+  Lifespan: Infinite
+  Deadline: Infinite
+  Liveliness: AUTOMATIC
+  Liveliness lease duration: Infinite
+
+
+$ timeout -s INT 4 ros2 topic echo /contador
+Cannot echo topic '/contador', as it contains more than one type: [std_msgs/msg/Float32, std_msgs/msg/Int32]
+
+# Lo que recibió el suscriptor Float32 durante 14 segundos:
+$ ros2 topic echo /contador std_msgs/msg/Float32
+(no se ha recibido ningún mensaje)

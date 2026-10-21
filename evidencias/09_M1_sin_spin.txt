@@ -1,0 +1,30 @@
+# Memoria M1 · Sin rclpy.spin() el nodo se crea, pero ningún callback se ejecuta y el proceso termina
+# Generado el 21/10/2026 21:51:09 en jasov@JASOV
+
+# Programa de prueba (fuera del paquete): igual que main() de mi_nodo, pero sin spin
+$ cat prueba_sin_spin.py
+import rclpy
+from mi_primer_paquete.mi_nodo import MiNodo
+
+rclpy.init()
+nodo = MiNodo()
+nodo.get_logger().info('Nodo creado. NO se llama a rclpy.spin()')
+nodo.destroy_node()
+rclpy.shutdown()
+print('Fin del programa: el proceso termina sin publicar nada')
+
+# Ejecución: sale el log del constructor, ningún 'Publicando' y el proceso termina enseguida
+$ time python3 prueba_sin_spin.py
+[INFO] [1792612269.520378203] [mi_nodo]: Nodo creado. NO se llama a rclpy.spin()
+Fin del programa: el proceso termina sin publicar nada
+
+real	0m0.379s
+user	0m0.224s
+sys	0m0.051s
+
+# Comparación: con rclpy.spin() (ros2 run normal) el nodo sigue publicando hasta que se le para
+$ timeout -s INT 4 ros2 run mi_primer_paquete mi_nodo
+[INFO] [1792612271.032703969] [mi_nodo]: Publicando: "Hola desde ROS2, numero 0"
+[INFO] [1792612272.022974912] [mi_nodo]: Publicando: "Hola desde ROS2, numero 1"
+[INFO] [1792612273.022814808] [mi_nodo]: Publicando: "Hola desde ROS2, numero 2"
+

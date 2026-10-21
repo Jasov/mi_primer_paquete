@@ -1,0 +1,18 @@
+# R2 · Sistema de dos nodos: mi_nodo publica /saludo (String), contador_nodo publica /contador (Int32)
+# Generado el 21/10/2026 21:50:29 en jasov@JASOV
+
+$ ros2 node list
+/contador_nodo
+/mi_nodo
+
+$ ros2 topic list -t
+/contador [std_msgs/msg/Int32]
+/parameter_events [rcl_interfaces/msg/ParameterEvent]
+/rosout [rcl_interfaces/msg/Log]
+/saludo [std_msgs/msg/String]
+
+$ ros2 topic info /saludo
+Type: std_msgs/msg/String
+Publisher count: 1
+Subscription count: 1
+

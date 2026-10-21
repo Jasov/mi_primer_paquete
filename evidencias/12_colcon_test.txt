@@ -1,0 +1,12 @@
+# Pruebas automáticas del paquete (flake8 y pep257) con colcon test
+# Generado el 21/10/2026 21:51:38 en jasov@JASOV
+
+$ colcon test --packages-select mi_primer_paquete
+Starting >>> mi_primer_paquete
+Finished <<< mi_primer_paquete [0.73s]
+
+Summary: 1 package finished [0.85s]
+
+$ colcon test-result --verbose
+Summary: 3 tests, 0 errors, 0 failures, 1 skipped
+

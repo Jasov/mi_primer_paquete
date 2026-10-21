@@ -1,0 +1,30 @@
+# R5 · QoS RELIABLE + TRANSIENT_LOCAL (depth 10): un suscriptor que arranca tarde recibe el último valor
+# Generado el 21/10/2026 21:50:54 en jasov@JASOV
+
+# 1) Se para mi_nodo: ya nadie publica /saludo, así que /contador deja de cambiar.
+#    Último valor publicado por contador_nodo antes de parar:
+$ grep Recibido log_contador_nodo.txt | tail -n 1
+[INFO] [1792612254.560540666] [contador_nodo]: Recibido "Hola desde ROS2, numero 28" -> contador = 16
+
+# 2) Suscriptor tardío TRANSIENT_LOCAL: recibe los valores guardados (el último es el actual).
+$ timeout -s INT 5 ros2 topic echo /contador --qos-durability transient_local --qos-reliability reliable
+data: 12
+---
+data: 13
+---
+data: 14
+---
+data: 15
+---
+data: 16
+---
+
+# 3) Solo el último valor (cola de 1 en el suscriptor):
+$ timeout -s INT 5 ros2 topic echo /contador --qos-durability transient_local --qos-reliability reliable --qos-depth 1 --once
+data: 16
+---
+
+# 4) Contraprueba: suscriptor tardío VOLATILE. No recibe nada, porque ya no se publica nada nuevo.
+$ ros2 topic echo /contador --qos-durability volatile --qos-reliability reliable
+(no se ha recibido ningún mensaje en 5 segundos)
+

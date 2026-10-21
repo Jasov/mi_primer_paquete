@@ -1,0 +1,19 @@
+# Memoria M4 · 'No executable found' (instalación) frente a un fallo de comunicación por topics
+# Generado el 21/10/2026 21:51:30 en jasov@JASOV
+
+# a) Ejecutable que no está registrado en entry_points: falla antes de crear ningún nodo
+$ ros2 run mi_primer_paquete nodo_que_no_existe
+No executable found
+
+# b) Terminal sin 'source install/setup.bash': ni siquiera se encuentra el paquete
+$ ros2 run mi_primer_paquete mi_nodo
+Package 'mi_primer_paquete' not found
+
+# c) Fallo de comunicación: los nodos funcionan, pero el topic está mal escrito (/Saludo)
+$ ros2 node list
+/contador_nodo
+/mi_nodo
+
+$ ros2 topic echo /Saludo std_msgs/msg/String
+(no se ha recibido ningún mensaje en 5 segundos)
+

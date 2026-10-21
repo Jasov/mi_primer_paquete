@@ -1,0 +1,36 @@
+# R2 · contador_nodo recibe los saludos, los cuenta y publica el total en /contador
+# Generado el 21/10/2026 21:50:30 en jasov@JASOV
+
+$ timeout -s INT 3 ros2 topic echo /saludo
+data: Hola desde ROS2, numero 5
+---
+data: Hola desde ROS2, numero 6
+---
+
+$ timeout -s INT 4 ros2 topic echo /contador
+data: 4
+---
+data: 5
+---
+data: 6
+---
+data: 7
+---
+data: 8
+---
+data: 9
+---
+data: 10
+---
+data: 11
+---
+data: 12
+---
+
+$ grep Recibido log_contador_nodo.txt | tail -n 5
+[INFO] [1792612233.561352667] [contador_nodo]: Recibido "Hola desde ROS2, numero 7" -> contador = 8
+[INFO] [1792612234.560887306] [contador_nodo]: Recibido "Hola desde ROS2, numero 8" -> contador = 9
+[INFO] [1792612235.560959439] [contador_nodo]: Recibido "Hola desde ROS2, numero 9" -> contador = 10
+[INFO] [1792612236.560898525] [contador_nodo]: Recibido "Hola desde ROS2, numero 10" -> contador = 11
+[INFO] [1792612237.560912629] [contador_nodo]: Recibido "Hola desde ROS2, numero 11" -> contador = 12
+

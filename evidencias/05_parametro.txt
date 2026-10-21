@@ -1,0 +1,31 @@
+# R4 · Parámetro umbral: WARN al alcanzarlo y cambio en caliente con ros2 param set (sin reiniciar)
+# Generado el 21/10/2026 21:50:42 en jasov@JASOV
+
+$ ros2 param list /contador_nodo
+  start_type_description_service
+  umbral
+  use_sim_time
+
+$ ros2 param get /contador_nodo umbral
+Integer value is: 10
+
+$ ros2 param set /contador_nodo umbral 5
+Set parameter successful
+
+$ ros2 param get /contador_nodo umbral
+Integer value is: 5
+
+# Validación: se rechazan valores menores que 1 y valores que no son enteros
+$ ros2 param set /contador_nodo umbral -1
+Setting parameter failed: umbral debe ser un entero mayor que 0
+
+$ ros2 param set /contador_nodo umbral 2.5
+Setting parameter failed: Wrong parameter type, expected 'Type.INTEGER' got 'Type.DOUBLE'
+
+# Log de contador_nodo: WARN con el umbral por defecto (10), cambio en caliente y WARN con 5
+$ grep -E 'WARN|umbral|reiniciado' log_contador_nodo.txt
+[WARN] [1792612235.561188088] [contador_nodo]: Contador = 10: se ha alcanzado el umbral (10)
+[INFO] [1792612238.907072758] [contador_nodo]: Contador reiniciado a 0 (valor anterior: 13)
+[INFO] [1792612244.755278831] [contador_nodo]: umbral cambiado en caliente a 5
+[WARN] [1792612245.560870055] [contador_nodo]: Contador = 7: se ha alcanzado el umbral (5)
+

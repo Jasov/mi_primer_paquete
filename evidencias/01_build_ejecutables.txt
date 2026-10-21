@@ -1,0 +1,13 @@
+# R1 · El paquete compila con colcon build y los dos nodos están registrados en entry_points
+# Generado el 21/10/2026 21:50:22 en jasov@JASOV
+
+$ colcon build --packages-select mi_primer_paquete
+Starting >>> mi_primer_paquete
+Finished <<< mi_primer_paquete [0.78s]
+
+Summary: 1 package finished [0.88s]
+
+$ ros2 pkg executables mi_primer_paquete
+mi_primer_paquete contador_nodo
+mi_primer_paquete mi_nodo
+
